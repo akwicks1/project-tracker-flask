@@ -76,7 +76,7 @@ def get_project_by_title(title):
     print "Description: {description}".format(description=row[1])
     print "Max Grade: {max_grade}".format(max_grade=row[2])
 
-    return row
+    return row #returns a tuple 
 
 
 def get_grade_by_github_title(github, title):

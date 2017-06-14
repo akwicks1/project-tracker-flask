@@ -15,24 +15,21 @@ def get_student():
 
     first, last, github = hackbright.get_student_by_github(github)
 
-    title, grade = hackbright.get_grades_by_github(github)
+    grades = hackbright.get_grades_by_github(github)
 
-    html = render_template("student_info.html",
+    return render_template("student_info.html",
                             first=first,
                             last=last, 
                             github=github,
-                            title=title,
-                            grade=grade)
+                            grades=grades)
 
-    return html
 
 @app.route("/student-search")
 def get_student_form():
     """Show form for searching for a student."""
 
-    html = render_template("student_search.html")
+    return render_template("student_search.html")
 
-    return html
 
 @app.route("/student-add")
 def student_add():
@@ -53,15 +50,25 @@ def added_student():
     hackbright.make_new_student(first, last, github)
 
 
-    html = render_template("successful_add.html",
+    return render_template("successful_add.html",
                             first=first,
                             last=last,
                             github=github)
 
+@app.route("/project")
+def project_listing():
 
-    return html
+    title = request.args.get('title')
 
+    project_name, description, grade = hackbright.get_project_by_title(title)
 
+    student_grades = hackbright.get_grades_by_title(title)
+
+    return render_template("project_info.html",
+                            project_name=project_name,
+                            description=description,
+                            grade=grade,
+                            student_grades=student_grades)
 
 
 
